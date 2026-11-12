@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тебе открытка 💌</title>
+<meta property="og:title" content="Тебе открытка 💌">
+<meta property="og:description" content="Открой, тут кое-что для тебя">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💗</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --pink: #ff8fb1; --deep: #e2557f; --ink: #4a3b47; --cream: #fff7fa; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: "Comfortaa", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    background: radial-gradient(circle at 30% 20%, #ffe3ee, #ffc6da 55%, #ffb0c9);
+    display: grid; place-items: center; overflow: hidden; user-select: none;
+  }
+  .floater { position: fixed; bottom: -40px; pointer-events: none; animation: rise linear forwards; }
+  @keyframes rise {
+    to { transform: translate(var(--dx), -115vh) rotate(var(--rot)); opacity: 0; }
+  }
+
+  /* envelope */
+  #envelope {
+    cursor: pointer; text-align: center; transition: transform .5s, opacity .5s;
+    animation: bob 2.4s ease-in-out infinite;
+  }
+  #envelope .env { font-size: 120px; line-height: 1; filter: drop-shadow(0 10px 18px rgba(226,85,127,.35)); }
+  #envelope p { margin: 14px 0 0; font-size: 20px; font-weight: 700; color: var(--deep); }
+  #envelope.gone { transform: scale(.4) translateY(-60px); opacity: 0; pointer-events: none; }
+  @keyframes bob { 50% { transform: translateY(-10px) rotate(-3deg); } }
+
+  /* card */
+  #card {
+    position: absolute; width: min(88vw, 380px); padding: 28px 22px 30px;
+    background: var(--cream); border-radius: 28px; text-align: center;
+    box-shadow: 0 20px 50px rgba(200,60,110,.3), 0 0 0 6px #fff inset, 0 0 0 9px #ffd3e2 inset;
+    transform: scale(.3) rotate(-8deg); opacity: 0; pointer-events: none;
+    transition: transform .7s cubic-bezier(.2,1.6,.4,1), opacity .4s;
+  }
+  #card.open { transform: none; opacity: 1; pointer-events: auto; }
+  #cat { width: 220px; max-width: 70%; cursor: pointer; overflow: visible; }
+  #cat .tail { transform-origin: 140px 170px; animation: wag 1.6s ease-in-out infinite; }
+  @keyframes wag { 50% { transform: rotate(14deg); } }
+  #cat .eye { transform-box: fill-box; transform-origin: center; animation: blink 4s infinite; }
+  @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+  #cat .held { transform-box: fill-box; transform-origin: center; animation: beat 1.2s ease-in-out infinite; }
+  @keyframes beat { 15% { transform: scale(1.12); } 30% { transform: scale(1); } 45% { transform: scale(1.08); } }
+  .name {
+    display: inline-block; margin-top: 4px; padding: 4px 14px; border-radius: 999px;
+    background: #ffe0ea; color: var(--deep); font-weight: 700; font-size: 15px;
+  }
+  h1 {
+    margin: 18px 0 0; font-size: clamp(30px, 9vw, 40px); color: var(--deep);
+    text-shadow: 0 2px 0 #fff, 0 4px 12px rgba(226,85,127,.25);
+  }
+  .meow {
+    position: absolute; top: 20px; right: 26px; padding: 6px 12px; border-radius: 14px 14px 14px 2px;
+    background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.08); font-weight: 700; font-size: 15px;
+    opacity: 0; transform: translateY(6px); transition: .25s;
+  }
+  .meow.show { opacity: 1; transform: none; }
+  .hint { margin-top: 14px; font-size: 12px; opacity: .45; }
+</style>
+</head>
+<body>
+
+<div id="envelope" role="button" aria-label="Открыть открытку">
+  <div class="env">💌</div>
+  <p>Тебе открытка — нажми</p>
+</div>
+
+<div id="card" aria-hidden="true">
+  <div class="meow" id="meow">мяу 💕</div>
+  <svg id="cat" viewBox="0 0 200 210" aria-label="Кошечка Меймей">
+    <!-- tail -->
+    <path class="tail" d="M140 170 C 185 165, 190 120, 170 105 C 160 98, 152 110, 162 116 C 176 126, 168 152, 136 156"
+          fill="#fff" stroke="#4a3b47" stroke-width="3" stroke-linejoin="round"/>
+    <!-- body -->
+    <ellipse cx="100" cy="155" rx="50" ry="42" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
+    <ellipse cx="78" cy="196" rx="16" ry="9" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
+    <ellipse cx="122" cy="196" rx="16" ry="9" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
+    <!-- ears -->
+    <path d="M52 78 L58 28 L92 56 Z" fill="#fff" stroke="#4a3b47" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M62 64 L65 42 L82 56 Z" fill="#ffb3c8"/>
+    <path d="M148 78 L142 28 L108 56 Z" fill="#fff" stroke="#4a3b47" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M138 64 L135 42 L118 56 Z" fill="#ffb3c8"/>
+    <!-- head -->
+    <ellipse cx="100" cy="92" rx="56" ry="46" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
+    <!-- bow -->
+    <g transform="translate(138 52) rotate(18)">
+      <path d="M0 0 L-18 -11 L-18 11 Z" fill="#ff6f9c" stroke="#4a3b47" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M0 0 L18 -11 L18 11 Z" fill="#ff6f9c" stroke="#4a3b47" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle r="5" fill="#ff8fb1" stroke="#4a3b47" stroke-width="2.5"/>
+    </g>
+    <!-- face -->
+    <ellipse class="eye" cx="78" cy="92" rx="6.5" ry="9" fill="#4a3b47"/>
+    <ellipse class="eye" cx="122" cy="92" rx="6.5" ry="9" fill="#4a3b47"/>
+    <circle cx="80" cy="88" r="2.4" fill="#fff"/>
+    <circle cx="124" cy="88" r="2.4" fill="#fff"/>
+    <ellipse cx="64" cy="108" rx="10" ry="6" fill="#ff9dbb" opacity=".6"/>
+    <ellipse cx="136" cy="108" rx="10" ry="6" fill="#ff9dbb" opacity=".6"/>
+    <path d="M96 102 L104 102 L100 107 Z" fill="#ff7fa5" stroke="#4a3b47" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M91 109 Q95.5 115 100 109 Q104.5 115 109 109" fill="none" stroke="#4a3b47" stroke-width="2.5" stroke-linecap="round"/>
+    <g stroke="#4a3b47" stroke-width="2" stroke-linecap="round">
+      <line x1="40" y1="98" x2="58" y2="102"/><line x1="40" y1="110" x2="58" y2="108"/>
+      <line x1="160" y1="98" x2="142" y2="102"/><line x1="160" y1="110" x2="142" y2="108"/>
+    </g>
+    <!-- heart in paws -->
+    <g transform="translate(76 128) scale(2)">
+      <path class="held"
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            fill="#ff5c8d" stroke="#4a3b47" stroke-width="1.3" stroke-linejoin="round"/>
+    </g>
+    <ellipse cx="76" cy="152" rx="12" ry="9" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
+    <ellipse cx="124" cy="152" rx="12" ry="9" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
+  </svg>
+  <div><span class="name">Меймей</span></div>
+  <h1>Я тебя люблю</h1>
+  <div class="hint">погладь Меймей 🐾</div>
+</div>
+
+<script>
+  const glyphs = ["💗", "💕", "💖", "❤️", "🩷", "🐾"];
+  function floater(x, big) {
+    const el = document.createElement("span");
+    el.className = "floater";
+    el.textContent = glyphs[Math.random() * glyphs.length | 0];
+    el.style.left = (x ?? Math.random() * 100 + "vw");
+    el.style.fontSize = (big ? 22 + Math.random() * 22 : 14 + Math.random() * 18) + "px";
+    el.style.setProperty("--dx", (Math.random() * 120 - 60) + "px");
+    el.style.setProperty("--rot", (Math.random() * 90 - 45) + "deg");
+    el.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(el);
+    el.addEventListener("animationend", () => el.remove());
+  }
+  setInterval(() => floater(), 700);
+
+  const envelope = document.getElementById("envelope");
+  const card = document.getElementById("card");
+  envelope.addEventListener("click", () => {
+    envelope.classList.add("gone");
+    card.classList.add("open");
+    card.setAttribute("aria-hidden", "false");
+    for (let i = 0; i < 30; i++) setTimeout(() => floater(null, true), i * 60);
+  });
+
+  const meow = document.getElementById("meow");
+  let meowTimer;
+  document.getElementById("cat").addEventListener("click", () => {
+    meow.classList.add("show");
+    clearTimeout(meowTimer);
+    meowTimer = setTimeout(() => meow.classList.remove("show"), 1400);
+    for (let i = 0; i < 8; i++) setTimeout(() => floater(40 + Math.random() * 20 + "vw", true), i * 50);
+  });
+</script>
+</body>
+</html>
