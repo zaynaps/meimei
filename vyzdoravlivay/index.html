@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тебе от Меймей 🐾</title>
+<meta property="og:title" content="Тебе от Меймей 🐾">
+<meta property="og:description" content="Открой, Меймей тянет к тебе лапку">
+<meta property="og:image" content="https://zaynaps.github.io/meimei/snowmei.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --deep: #e2557f; --ink: #4a3b47; --cream: #fff7fa; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: "Comfortaa", "Segoe UI", system-ui, sans-serif; color: var(--ink);
+    background: radial-gradient(circle at 30% 20%, #ffe3ee, #ffc6da 55%, #ffb0c9);
+    display: grid; place-items: center; overflow: hidden; user-select: none;
+  }
+  .floater { position: fixed; z-index: 1; bottom: -40px; pointer-events: none; animation: rise linear forwards; }
+  @keyframes rise { to { transform: translate(var(--dx), -115vh) rotate(var(--rot)); opacity: 0; } }
+
+  #envelope { cursor: pointer; text-align: center; transition: transform .5s, opacity .5s; animation: bob 2.4s ease-in-out infinite; }
+  #envelope .env { font-size: 120px; line-height: 1; filter: drop-shadow(0 10px 18px rgba(226,85,127,.35)); }
+  #envelope p { margin: 14px 0 0; font-size: 20px; font-weight: 700; color: var(--deep); }
+  #envelope.gone { transform: scale(.4) translateY(-60px); opacity: 0; pointer-events: none; }
+  @keyframes bob { 50% { transform: translateY(-10px) rotate(-3deg); } }
+
+  #card {
+    position: absolute; z-index: 2; width: min(90vw, 380px); max-height: 94vh; padding: 22px 20px 24px;
+    background: var(--cream); border-radius: 28px; text-align: center;
+    box-shadow: 0 20px 50px rgba(200,60,110,.3), 0 0 0 6px #fff inset, 0 0 0 9px #ffd3e2 inset;
+    transform: scale(.3) rotate(-8deg); opacity: 0; pointer-events: none;
+    transition: transform .7s cubic-bezier(.2,1.6,.4,1), opacity .4s;
+  }
+  #card.open { transform: none; opacity: 1; pointer-events: auto; }
+
+  #cat { position: relative; display: inline-block; width: 200px; max-width: 60%; cursor: pointer; }
+  #cat img {
+    display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%;
+    border-radius: 24px; border: 6px solid #fff; box-shadow: 0 0 0 4px #ffc2d6, 0 12px 28px rgba(200,60,110,.3);
+  }
+  #cat.pet { animation: wiggle .5s ease-in-out; }
+  @keyframes wiggle { 25% { transform: rotate(-5deg) scale(1.04); } 75% { transform: rotate(5deg) scale(1.04); } }
+  .badge { position: absolute; right: -4px; bottom: 2px; font-size: 40px; animation: beat 1.2s ease-in-out infinite; }
+  @keyframes beat { 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+
+  .action { margin: 14px 0 0; font-size: 14px; font-style: italic; opacity: .55; }
+  #phrase {
+    margin: 6px 0 0; min-height: 2.5em; display: grid; place-items: center;
+    font-size: clamp(28px, 8.5vw, 36px); font-weight: 700; line-height: 1.15; color: var(--deep);
+    text-shadow: 0 2px 0 #fff, 0 4px 12px rgba(226,85,127,.25);
+  }
+  #phrase.pop { animation: pop .45s cubic-bezier(.2,1.6,.4,1); }
+  @keyframes pop { from { transform: scale(.5); opacity: 0; } }
+
+  .dots { display: flex; justify-content: center; gap: 8px; margin: 8px 0 14px; }
+  .dots span { width: 9px; height: 9px; border-radius: 50%; background: #ffd0df; transition: .3s; }
+  .dots span.on { background: var(--deep); transform: scale(1.25); }
+
+  #paw {
+    font: inherit; font-size: 17px; font-weight: 700; color: #fff; cursor: pointer;
+    padding: 12px 26px; border: 0; border-radius: 999px;
+    background: linear-gradient(135deg, #ff7fa8, #e2557f); box-shadow: 0 8px 18px rgba(226,85,127,.35);
+    transition: transform .15s;
+  }
+  #paw:active { transform: scale(.94); }
+
+  .stamp { position: absolute; pointer-events: none; font-size: 26px; animation: stamp 1.2s ease-out forwards; }
+  @keyframes stamp { 0% { transform: scale(1.8) rotate(var(--r)); opacity: 0; } 20% { transform: scale(1) rotate(var(--r)); opacity: .9; } 100% { opacity: 0; } }
+</style>
+</head>
+<body>
+
+<div id="envelope" role="button" aria-label="Открыть">
+  <div class="env">💌</div>
+  <p>Тебе от Меймей — нажми</p>
+</div>
+
+<div id="card" aria-hidden="true">
+  <div id="cat" role="button" aria-label="Меймей тянет лапку">
+    <img src="../snowmei.jpg" alt="Меймей тянет лапку">
+    <span class="badge">💗</span>
+  </div>
+  <p class="action">*тянет лапку*</p>
+  <div id="phrase"></div>
+  <div class="dots" id="dots"></div>
+  <button id="paw" type="button">дай лапку 🐾</button>
+</div>
+
+<script>
+  const phrases = [
+    ["выздоравливай", "🍵"],
+    ["я тебя люблю", "💗"],
+    ["сладкая булочка", "🥐"],
+    ["прости", "🥺"],
+    ["любимый", "💕"],
+  ];
+  const glyphs = ["💗", "💕", "💖", "🩷", "🐾", "🍵", "🥐"];
+
+  function floater(x, big) {
+    const el = document.createElement("span");
+    el.className = "floater";
+    el.textContent = glyphs[Math.random() * glyphs.length | 0];
+    el.style.left = x ?? Math.random() * 100 + "vw";
+    el.style.fontSize = (big ? 22 + Math.random() * 22 : 14 + Math.random() * 18) + "px";
+    el.style.setProperty("--dx", (Math.random() * 120 - 60) + "px");
+    el.style.setProperty("--rot", (Math.random() * 90 - 45) + "deg");
+    el.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(el);
+    el.addEventListener("animationend", () => el.remove());
+  }
+  setInterval(() => floater(), 700);
+
+  const card = document.getElementById("card");
+  const cat = document.getElementById("cat");
+  const phraseEl = document.getElementById("phrase");
+  const dots = document.getElementById("dots");
+  const pawBtn = document.getElementById("paw");
+  phrases.forEach(() => dots.appendChild(document.createElement("span")));
+
+  let i = -1;
+  function stamp() {
+    const s = document.createElement("span");
+    s.className = "stamp";
+    s.textContent = "🐾";
+    s.style.left = 10 + Math.random() * 75 + "%";
+    s.style.top = 5 + Math.random() * 80 + "%";
+    s.style.setProperty("--r", (Math.random() * 60 - 30) + "deg");
+    card.appendChild(s);
+    s.addEventListener("animationend", () => s.remove());
+  }
+  function next() {
+    i = (i + 1) % phrases.length;
+    const [text, emoji] = phrases[i];
+    phraseEl.textContent = text + " " + emoji;
+    phraseEl.classList.remove("pop"); void phraseEl.offsetWidth; phraseEl.classList.add("pop");
+    cat.classList.remove("pet"); void cat.offsetWidth; cat.classList.add("pet");
+    [...dots.children].forEach((d, k) => d.classList.toggle("on", k <= i));
+    pawBtn.textContent = i === phrases.length - 1 ? "ещё раз 🐾" : "дай лапку 🐾";
+    stamp();
+    const burst = i === phrases.length - 1 ? 20 : 8;
+    for (let k = 0; k < burst; k++) setTimeout(() => floater(30 + Math.random() * 40 + "vw", true), k * 50);
+  }
+  cat.addEventListener("animationend", () => cat.classList.remove("pet"));
+  cat.addEventListener("click", next);
+  pawBtn.addEventListener("click", next);
+
+  document.getElementById("envelope").addEventListener("click", (e) => {
+    e.currentTarget.classList.add("gone");
+    card.classList.add("open");
+    card.setAttribute("aria-hidden", "false");
+    next();
+    for (let k = 0; k < 24; k++) setTimeout(() => floater(null, true), k * 60);
+  });
+</script>
+</body>
+</html>
