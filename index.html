@@ -6,6 +6,7 @@
 <title>Тебе открытка 💌</title>
 <meta property="og:title" content="Тебе открытка 💌">
 <meta property="og:description" content="Открой, тут кое-что для тебя">
+<meta property="og:image" content="https://zaynaps.github.io/meimei/meimei.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💗</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&display=swap" rel="stylesheet">
@@ -43,13 +44,15 @@
     transition: transform .7s cubic-bezier(.2,1.6,.4,1), opacity .4s;
   }
   #card.open { transform: none; opacity: 1; pointer-events: auto; }
-  #cat { width: 220px; max-width: 70%; cursor: pointer; overflow: visible; }
-  #cat .tail { transform-origin: 140px 170px; animation: wag 1.6s ease-in-out infinite; }
-  @keyframes wag { 50% { transform: rotate(14deg); } }
-  #cat .eye { transform-box: fill-box; transform-origin: center; animation: blink 4s infinite; }
-  @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
-  #cat .held { transform-box: fill-box; transform-origin: center; animation: beat 1.2s ease-in-out infinite; }
-  @keyframes beat { 15% { transform: scale(1.12); } 30% { transform: scale(1); } 45% { transform: scale(1.08); } }
+  #cat { position: relative; display: inline-block; width: 230px; max-width: 72%; cursor: pointer; }
+  #cat img {
+    display: block; width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 26%;
+    border-radius: 50%; border: 6px solid #fff; box-shadow: 0 0 0 4px #ffc2d6, 0 12px 28px rgba(200,60,110,.3);
+  }
+  #cat.pet { animation: wiggle .5s ease-in-out; }
+  @keyframes wiggle { 25% { transform: rotate(-6deg) scale(1.03); } 75% { transform: rotate(6deg) scale(1.03); } }
+  .badge { position: absolute; right: 2%; bottom: 4%; font-size: 44px; animation: beat 1.2s ease-in-out infinite; }
+  @keyframes beat { 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
   .name {
     display: inline-block; margin-top: 4px; padding: 4px 14px; border-radius: 999px;
     background: #ffe0ea; color: var(--deep); font-weight: 700; font-size: 15px;
@@ -76,49 +79,10 @@
 
 <div id="card" aria-hidden="true">
   <div class="meow" id="meow">мяу 💕</div>
-  <svg id="cat" viewBox="0 0 200 210" aria-label="Кошечка Меймей">
-    <!-- tail -->
-    <path class="tail" d="M140 170 C 185 165, 190 120, 170 105 C 160 98, 152 110, 162 116 C 176 126, 168 152, 136 156"
-          fill="#fff" stroke="#4a3b47" stroke-width="3" stroke-linejoin="round"/>
-    <!-- body -->
-    <ellipse cx="100" cy="155" rx="50" ry="42" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
-    <ellipse cx="78" cy="196" rx="16" ry="9" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
-    <ellipse cx="122" cy="196" rx="16" ry="9" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
-    <!-- ears -->
-    <path d="M52 78 L58 28 L92 56 Z" fill="#fff" stroke="#4a3b47" stroke-width="3" stroke-linejoin="round"/>
-    <path d="M62 64 L65 42 L82 56 Z" fill="#ffb3c8"/>
-    <path d="M148 78 L142 28 L108 56 Z" fill="#fff" stroke="#4a3b47" stroke-width="3" stroke-linejoin="round"/>
-    <path d="M138 64 L135 42 L118 56 Z" fill="#ffb3c8"/>
-    <!-- head -->
-    <ellipse cx="100" cy="92" rx="56" ry="46" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
-    <!-- bow -->
-    <g transform="translate(138 52) rotate(18)">
-      <path d="M0 0 L-18 -11 L-18 11 Z" fill="#ff6f9c" stroke="#4a3b47" stroke-width="2.5" stroke-linejoin="round"/>
-      <path d="M0 0 L18 -11 L18 11 Z" fill="#ff6f9c" stroke="#4a3b47" stroke-width="2.5" stroke-linejoin="round"/>
-      <circle r="5" fill="#ff8fb1" stroke="#4a3b47" stroke-width="2.5"/>
-    </g>
-    <!-- face -->
-    <ellipse class="eye" cx="78" cy="92" rx="6.5" ry="9" fill="#4a3b47"/>
-    <ellipse class="eye" cx="122" cy="92" rx="6.5" ry="9" fill="#4a3b47"/>
-    <circle cx="80" cy="88" r="2.4" fill="#fff"/>
-    <circle cx="124" cy="88" r="2.4" fill="#fff"/>
-    <ellipse cx="64" cy="108" rx="10" ry="6" fill="#ff9dbb" opacity=".6"/>
-    <ellipse cx="136" cy="108" rx="10" ry="6" fill="#ff9dbb" opacity=".6"/>
-    <path d="M96 102 L104 102 L100 107 Z" fill="#ff7fa5" stroke="#4a3b47" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M91 109 Q95.5 115 100 109 Q104.5 115 109 109" fill="none" stroke="#4a3b47" stroke-width="2.5" stroke-linecap="round"/>
-    <g stroke="#4a3b47" stroke-width="2" stroke-linecap="round">
-      <line x1="40" y1="98" x2="58" y2="102"/><line x1="40" y1="110" x2="58" y2="108"/>
-      <line x1="160" y1="98" x2="142" y2="102"/><line x1="160" y1="110" x2="142" y2="108"/>
-    </g>
-    <!-- heart in paws -->
-    <g transform="translate(76 128) scale(2)">
-      <path class="held"
-            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-            fill="#ff5c8d" stroke="#4a3b47" stroke-width="1.3" stroke-linejoin="round"/>
-    </g>
-    <ellipse cx="76" cy="152" rx="12" ry="9" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
-    <ellipse cx="124" cy="152" rx="12" ry="9" fill="#fff" stroke="#4a3b47" stroke-width="3"/>
-  </svg>
+  <div id="cat" role="button" aria-label="Погладить Меймей">
+    <img src="meimei.jpg" alt="Кошечка Меймей">
+    <span class="badge">💗</span>
+  </div>
   <div><span class="name">Меймей</span></div>
   <h1>Я тебя люблю</h1>
   <div class="hint">погладь Меймей 🐾</div>
@@ -151,7 +115,10 @@
 
   const meow = document.getElementById("meow");
   let meowTimer;
-  document.getElementById("cat").addEventListener("click", () => {
+  const cat = document.getElementById("cat");
+  cat.addEventListener("animationend", () => cat.classList.remove("pet"));
+  cat.addEventListener("click", () => {
+    cat.classList.remove("pet"); void cat.offsetWidth; cat.classList.add("pet");
     meow.classList.add("show");
     clearTimeout(meowTimer);
     meowTimer = setTimeout(() => meow.classList.remove("show"), 1400);
